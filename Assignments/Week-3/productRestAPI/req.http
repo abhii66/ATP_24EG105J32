@@ -1,0 +1,41 @@
+POST http://localhost:6707/product-api/products
+Content-Type: application/json
+
+{
+    "productId":1,
+    "productName":"PS5",
+    "price":47500,
+    "brand":"sony"
+}
+
+###
+POST http://localhost:6707/product-api/products
+Content-Type: application/json
+
+{
+    "productId":2,
+    "productName":"Xbox",
+    "price":39200,
+    "brand":"Microsoft"
+}
+
+###
+GET http://localhost:6707/product-api/products
+
+
+###
+GET http://localhost:6707/product-api/products/69aba49fa495dac8e474ed71
+
+###
+PUT http://localhost:6707/product-api/products/69aace7c88fe1cf6b94c7825
+Content-Type: application/json
+
+{
+    "productId":1,
+    "productName":"PS5",
+    "price":47900,
+    "brand":"sony"
+}
+
+###
+DELETE http://localhost:6707/product-api/products/69aba49fa495dac8e474ed71
