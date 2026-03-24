@@ -1,0 +1,29 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+parent{
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+top{
+    padding:20px;   
+    background-color: #c7c7c7;
+}
+
+
+down{
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+
+.box{
+    flex: 1;
+}
+

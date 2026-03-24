@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: hsl(182, 34%, 43%);
+    margin: 0;
+    padding: 40px;
+}
+
+.container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 900px;
+    margin: auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+h1 {
+    text-align: center;
+    background: #3f8c8c;
+    color: white;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: hwb(180 46% 0%);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+table tr:nth-child(even) {
+    background-color: hwb(180 46% 0%);
+}
+
+img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
