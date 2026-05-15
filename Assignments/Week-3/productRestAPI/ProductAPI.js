@@ -1,47 +1,88 @@
-import exp from 'express'
-import { ProductModel } from '../models/ProductModel.js'
-export const productApp=exp.Router()
+// productRoutes.js - Product Management API
+import exp from 'express';
+import { ProductModel } from '../models/ProductModel.js';
 
-productApp.post("/products",async(req,res)=>{
-        //get new product obj from request
-        const newProduct=req.body
-        //Create newProductDocument
-        const newProductDocument=new ProductModel(newProduct)
-        //save
-        const result= await newProductDocument.save()
-        console.log("result: ", result)
-        //send res
-        res.status(201).json({message:"Product Added."})
-    })
+export const productApp = exp.Router();
 
-productApp.put("/products/:id",async(req,res)=>{
-        //get modified product from the req
-        const modifiedProduct= req.body
-        const uid=req.params.id
-        //find product by ID and update
-        const updatedProduct= await ProductModel.findByIdAndUpdate(uid,{ $set:{ ...modifiedProduct}},{new: true,runValidators:true})
-        //send res
-        res.status(200).json({message:"Product Modified",payload:updatedProduct})
-    })
+// Create - Add new product
+productApp.post("/products", async (req, res) => {
+    // Get new product obj from request
+    const newProduct = req.body;
 
-productApp.get("/products",async(req,res)=>{
-    let productList=await ProductModel.find();
-    res.status(200).json({message:"products:",payload:productList})
-})
+    // Create newProductDocument
+    const newProductDocument = new ProductModel(newProduct);
 
-productApp.get("/products/:id",async(req,res)=> {
-        //read object id from req params
-        const uid=req.params.id
-        //find product by id
-        const productObj=await ProductModel.findById(uid)  //use findOne() to readd a document with non object id fields.// use findById() to read document with object id.
-        //send res
-        res.status(200).json({message:'product:',payload:productObj})
-    })
+    // Save to database
+    const result = await newProductDocument.save();
+    console.log("result: ", result);
 
-productApp.delete("/products/:id",async(req,res)=>{
-    let uid=req.params.id
-    const deletedProduct=await ProductModel.findByIdAndDelete(uid)
-    if(!deletedProduct)
-        return res.status(404).json({message:"Product not found."})
-    res.status(200).json({message:"Product Deleted."})
-})
+    // Send response
+    res.status(201).json({ 
+        message: "Product Added.", 
+        payload: result 
+    });
+});
+
+// Read All - Get all products
+productApp.get("/products", async (req, res) => {
+    // Find all documents
+    const productList = await ProductModel.find();
+
+    // Send response
+    res.status(200).json({ 
+        message: "products:", 
+        payload: productList 
+    });
+});
+
+// Read One - Get product by ID
+productApp.get("/products/:id", async (req, res) => {
+    // Read object id from req params
+    const uid = req.params.id;
+
+    // Find product by id
+    // Use findOne() for non-object id fields; use findById() for ObjectIds
+    const productObj = await ProductModel.findById(uid);
+
+    // Send response
+    res.status(200).json({ 
+        message: 'product:', 
+        payload: productObj 
+    });
+});
+
+// Update - Modify product by ID
+productApp.put("/products/:id", async (req, res) => {
+    // Get modified product from the req
+    const modifiedProduct = req.body;
+    const uid = req.params.id;
+
+    // Find product by ID and update
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+        uid, 
+        { $set: { ...modifiedProduct } }, 
+        { new: true, runValidators: true }
+    );
+
+    // Send res
+    res.status(200).json({ 
+        message: "Product Modified", 
+        payload: updatedProduct 
+    });
+});
+
+// Delete - Remove product by ID
+productApp.delete("/products/:id", async (req, res) => {
+    const uid = req.params.id;
+
+    // Find and delete
+    const deletedProduct = await ProductModel.findByIdAndDelete(uid);
+
+    // Check if product existed
+    if (!deletedProduct) {
+        return res.status(404).json({ message: "Product not found." });
+    }
+
+    // Send res
+    res.status(200).json({ message: "Product Deleted." });
+});
